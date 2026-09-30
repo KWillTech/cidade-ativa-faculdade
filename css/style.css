@@ -89,9 +89,9 @@ header h1 { margin: 0; font-size: var(--fs-500); flex: 1; }
 .menu-toggle:focus-visible + .menu-icone { outline: 3px solid var(--cor-destaque); outline-offset: 2px; }
 
 /* Transição do hambúrguer para "X" quando aberto */
-.menu-toggle:checked + .menu-icone .barra:nth-of-type(1) { transform: translateY(8px) rotate(45deg); }
-.menu-toggle:checked + .menu-icone .barra:nth-of-type(2) { opacity: 0; }
-.menu-toggle:checked + .menu-icone .barra:nth-of-type(3) { transform: translateY(-8px) rotate(-45deg); }
+.menu-toggle:checked + .menu-icone .sr-only + .barra { transform: translateY(8px) rotate(45deg); }
+.menu-toggle:checked + .menu-icone .sr-only + .barra + .barra { opacity: 0; }
+.menu-toggle:checked + .menu-icone .sr-only + .barra + .barra + .barra { transform: translateY(-8px) rotate(-45deg); }
 
 /* Menu: oculto no celular, aberto com :checked */
 .menu {
