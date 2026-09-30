@@ -1,0 +1,355 @@
+/* ==========================================================
+   DESIGN SYSTEM - Cidade Ativa
+   ========================================================== */
+:root {
+  /* --- Cores primárias --- */
+  --cor-primaria: #1f3a5f;
+  --cor-primaria-escura: #14263f;
+  --cor-primaria-clara: #dbe5f1;
+
+  /* --- Cores secundárias --- */
+  --cor-secundaria: #2f6f5e;
+  --cor-destaque: #b45309;
+  --cor-sucesso: #1e7b3a;
+  --cor-erro: #b3261e;
+
+  /* --- Tons neutros --- */
+  --neutro-900: #1c2430;
+  --neutro-600: #4a5563;
+  --neutro-300: #c9d1d9;
+  --neutro-100: #f3f5f7;
+  --neutro-0: #ffffff;
+
+  /* --- Tipografia: escala modular (razão 1,25) --- */
+  --fonte-base: "Segoe UI", Arial, sans-serif;
+  --fs-100: 0.875rem;  /* 14px - rodapé, notas */
+  --fs-200: 1rem;      /* 16px - texto corrido */
+  --fs-300: 1.25rem;   /* 20px - h3 */
+  --fs-400: 1.563rem;  /* 25px - h2 */
+  --fs-500: 1.953rem;  /* 31px - h1 */
+
+  /* --- Espaçamentos: escala modular de base 8px --- */
+  --esp-1: 0.25rem;  /*  4px */
+  --esp-2: 0.5rem;   /*  8px */
+  --esp-3: 1rem;     /* 16px */
+  --esp-4: 1.5rem;   /* 24px */
+  --esp-5: 2rem;     /* 32px */
+  --esp-6: 3rem;     /* 48px */
+
+  /* --- Grid: 12 colunas --- */
+  --colunas: 12;
+  --gap-grid: var(--esp-3);
+  --largura-max: 100%;
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  font-family: var(--fonte-base);
+  font-size: var(--fs-200);
+  line-height: 1.6;
+  color: var(--neutro-900);
+  background: var(--neutro-100);
+}
+
+header {
+  background: var(--cor-primaria);
+  color: var(--neutro-0);
+  padding: var(--esp-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-3);
+  position: relative;
+}
+
+header h1 { margin: 0; font-size: var(--fs-500); flex: 1; }
+header h1 img { display: block; height: 36px; width: auto; max-width: 100%; }
+
+/* ==========================================================
+   MENU RESPONSIVO (hambúrguer no celular, dropdown no desktop)
+   ========================================================== */
+.sr-only {
+  position: absolute; width: 1px; height: 1px; overflow: hidden;
+  clip: rect(0 0 0 0); white-space: nowrap;
+}
+
+/* Checkbox que guarda o estado aberto/fechado (fica oculto, mas focável) */
+.menu-toggle { position: absolute; opacity: 0; width: 44px; height: 44px; margin: 0; }
+
+/* Ícone hambúrguer (3 barras) */
+.menu-icone {
+  display: flex; flex-direction: column; justify-content: center;
+  gap: 5px; width: 44px; height: 44px; padding: 0 var(--esp-2);
+  border: 1px solid var(--neutro-0); cursor: pointer;
+}
+.barra { display: block; height: 3px; background: var(--neutro-0); transition: transform 0.3s, opacity 0.3s; }
+.menu-toggle:focus-visible + .menu-icone { outline: 3px solid var(--cor-destaque); outline-offset: 2px; }
+
+/* Transição do hambúrguer para "X" quando aberto */
+.menu-toggle:checked + .menu-icone .barra:nth-of-type(1) { transform: translateY(8px) rotate(45deg); }
+.menu-toggle:checked + .menu-icone .barra:nth-of-type(2) { opacity: 0; }
+.menu-toggle:checked + .menu-icone .barra:nth-of-type(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* Menu: oculto no celular, aberto com :checked */
+.menu {
+  display: none; flex-direction: column; list-style: none; margin: 0;
+  padding: var(--esp-3); position: absolute; top: 100%; left: 0; right: 0;
+  background: var(--cor-primaria-escura); z-index: 20;
+}
+.menu-toggle:checked ~ .menu { display: flex; }
+
+.submenu { list-style: none; margin: 0; padding-left: var(--esp-4); }
+nav a { display: block; color: var(--neutro-0); text-decoration: none; padding: var(--esp-2) 0; border-bottom: 2px solid transparent; }
+nav a:hover { border-bottom-color: var(--neutro-0); }
+
+a { color: var(--cor-primaria); }
+
+a:focus-visible, button:focus-visible, input:focus-visible,
+select:focus-visible, textarea:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+/* ==========================================================
+   GRID DE 12 COLUNAS (abordagem mobile-first)
+   ========================================================== */
+main {
+  display: grid;
+  grid-template-columns: repeat(var(--colunas), minmax(0, 1fr));
+  gap: var(--gap-grid);
+  align-items: start;
+  max-width: var(--largura-max);
+  margin: 0 auto;
+  padding: var(--esp-3);
+}
+
+/* Mobile: toda seção ocupa as 12 colunas */
+main > section { grid-column: 1 / -1; }
+
+section {
+  background: var(--neutro-0);
+  border: 1px solid var(--neutro-300);
+  padding: var(--esp-3);
+  min-width: 0;
+}
+
+h2 { font-size: var(--fs-400); color: var(--cor-primaria-escura); margin-top: 0; }
+h3 { font-size: var(--fs-300); color: var(--cor-secundaria); }
+
+main img { max-width: 100%; height: auto; display: block; margin: var(--esp-3) 0; }
+
+#lista-campanhas + article,
+article + article { border-top: 1px solid var(--neutro-300); padding-top: var(--esp-3); }
+
+fieldset { border: 1px solid var(--neutro-300); margin: 0 0 var(--esp-4); padding: var(--esp-3); background: var(--cor-primaria-clara); }
+legend { font-weight: 600; color: var(--cor-primaria-escura); padding: 0 var(--esp-2); }
+
+label { display: block; margin-top: var(--esp-3); font-weight: 500; }
+input[type="text"], input[type="email"], input[type="tel"],
+input[type="date"], select, textarea {
+  width: 100%;
+  padding: var(--esp-2) var(--esp-3);
+  border: 1px solid var(--neutro-600);
+  background: var(--neutro-0);
+  color: var(--neutro-900);
+  font: inherit;
+}
+.opcao { display: flex; align-items: center; flex-wrap: wrap; gap: var(--esp-2); margin-top: var(--esp-2); }
+.opcao label { margin-top: 0; font-weight: normal; }
+
+/* ==========================================================
+   ESTADOS INTERATIVOS
+   ========================================================== */
+button {
+  background: var(--cor-primaria);
+  color: var(--neutro-0);
+  border: 2px solid var(--cor-primaria);
+  padding: var(--esp-3) var(--esp-4);
+  font: inherit;
+  cursor: pointer;
+  transition: background-color 0.2s, box-shadow 0.2s, transform 0.1s;
+}
+button:hover {
+  background: var(--cor-primaria-escura);
+  border-color: var(--cor-primaria-escura);
+  box-shadow: 0 4px 8px rgba(20, 38, 63, 0.35);
+}
+button:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+button:active {
+  transform: translateY(1px);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.35);
+}
+button:disabled {
+  background: var(--neutro-300);
+  border-color: var(--neutro-300);
+  color: var(--neutro-600);
+  box-shadow: none;
+  transform: none;
+  cursor: not-allowed;
+}
+
+/* Campos: hover e desabilitado */
+input:hover, select:hover, textarea:hover { border-color: var(--cor-primaria); }
+input:disabled, select:disabled, textarea:disabled {
+  background: var(--neutro-100);
+  color: var(--neutro-600);
+  cursor: not-allowed;
+}
+
+/* Validação visual (só após o usuário interagir com o campo) */
+input:user-valid, select:user-valid, textarea:user-valid {
+  border-color: var(--cor-sucesso);
+  box-shadow: inset 0 0 0 1px var(--cor-sucesso);
+}
+input:user-invalid, select:user-invalid, textarea:user-invalid {
+  border-color: var(--cor-erro);
+  box-shadow: inset 0 0 0 1px var(--cor-erro);
+}
+
+/* Ícones (não dependem só da cor): ✓ para válido e ✕ para inválido */
+input[type="text"]:user-valid, input[type="email"]:user-valid, input[type="tel"]:user-valid,
+input[type="text"]:user-invalid, input[type="email"]:user-invalid, input[type="tel"]:user-invalid {
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 16px;
+  padding-right: var(--esp-5);
+}
+input[type="text"]:user-valid, input[type="email"]:user-valid, input[type="tel"]:user-valid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M3 8.5l3.2 3.2L13 4.8' fill='none' stroke='%231e7b3a' stroke-width='2'/%3E%3C/svg%3E");
+}
+input[type="text"]:user-invalid, input[type="email"]:user-invalid, input[type="tel"]:user-invalid {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3E%3Cpath d='M4 4l8 8M12 4l-8 8' fill='none' stroke='%23b3261e' stroke-width='2'/%3E%3C/svg%3E");
+}
+
+/* Respeita quem prefere menos movimento */
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
+
+footer { text-align: center; padding: var(--esp-4); font-size: var(--fs-100); color: var(--neutro-600); }
+
+/* ==========================================================
+   BREAKPOINTS RESPONSIVOS (5 cenários @media)
+   ========================================================== */
+
+/* 1) Celulares grandes (>= 480px): mais respiro nas áreas de conteúdo */
+@media (min-width: 480px) {
+  main { padding: var(--esp-4); }
+  section { padding: var(--esp-4); }
+}
+
+/* 2) Tablets (>= 768px): cabeçalho em linha e seções lado a lado */
+@media (min-width: 768px) {
+  :root { --gap-grid: var(--esp-4); --largura-max: 100%; }
+  header { padding: var(--esp-3) var(--esp-5); }
+  header h1 img { height: 44px; }
+
+  /* Esconde o hambúrguer e exibe o menu horizontal */
+  .menu-toggle, .menu-icone { display: none; }
+  .menu {
+    display: flex; flex-direction: row; flex-wrap: wrap; position: static;
+    background: transparent; padding: 0; gap: var(--esp-3) var(--esp-4);
+  }
+  nav a { padding: var(--esp-1) 0; }
+
+  /* Dropdown: oculto por padrão, aparece com :hover e :focus-within */
+  .tem-submenu { position: relative; }
+  .submenu {
+    display: none; position: absolute; top: 100%; left: 0; min-width: 180px;
+    padding: var(--esp-2) 0; background: var(--cor-primaria-escura); z-index: 20;
+  }
+  .submenu a { padding: var(--esp-2) var(--esp-3); white-space: nowrap; }
+  .tem-submenu:hover > .submenu,
+  .tem-submenu:focus-within > .submenu { display: block; }
+  main { padding: var(--esp-5); }
+  #voluntariado { grid-column: 1 / span 6; }
+  #doacoes { grid-column: 7 / span 6; }
+  main > section:only-child { grid-column: 2 / span 10; }
+}
+
+/* 3) Notebooks (>= 1024px): contêiner centralizado e proporção 7/5 */
+@media (min-width: 1024px) {
+  :root { --largura-max: 1100px; }
+  #sobre { grid-column: 1 / span 7; }
+  #contato { grid-column: 8 / span 5; }
+  main > section:only-child { grid-column: 3 / span 8; }
+}
+
+/* 4) Desktops (>= 1280px): mais respiro entre colunas */
+@media (min-width: 1280px) {
+  :root { --largura-max: 1200px; --gap-grid: var(--esp-5); }
+  section { padding: var(--esp-5); }
+}
+
+/* 5) Telas panorâmicas (>= 1600px): contêiner ampliado e texto maior */
+@media (min-width: 1600px) {
+  :root { --largura-max: 1400px; }
+  html { font-size: 112.5%; }
+}
+
+/* Mensagens de retorno dos formulários (texto + cor, não só cor) */
+.mensagem-form {
+  margin: var(--esp-3) 0 0;
+  padding: var(--esp-2) var(--esp-3);
+  border-left: 4px solid var(--neutro-600);
+  background: var(--neutro-100);
+  font-weight: 600;
+}
+.mensagem-form.sucesso { border-left-color: var(--cor-sucesso); color: var(--cor-sucesso); }
+.mensagem-form.erro { border-left-color: var(--cor-erro); color: var(--cor-erro); }
+
+/* Com o menu mobile aberto, bloqueia a rolagem da página */
+@media (max-width: 767.98px) {
+  body.menu-aberto { overflow: hidden; }
+}
+
+/* Mensagens de erro junto aos campos (ícone + texto, não só cor) */
+.erro-campo {
+  display: block;
+  margin-top: var(--esp-1);
+  color: var(--cor-erro);
+  font-size: var(--fs-100);
+  font-weight: 600;
+}
+.erro-campo::before { content: "\2716  "; }
+
+.campo-invalido:not([type="radio"]):not([type="checkbox"]) {
+  border-color: var(--cor-erro);
+  box-shadow: inset 0 0 0 1px var(--cor-erro);
+}
+.campo-valido:not([type="radio"]):not([type="checkbox"]) {
+  border-color: var(--cor-sucesso);
+  box-shadow: inset 0 0 0 1px var(--cor-sucesso);
+}
+input[type="radio"].campo-invalido, input[type="checkbox"].campo-invalido {
+  outline: 2px solid var(--cor-erro);
+  outline-offset: 2px;
+}
+
+/* Preferência salva: texto maior (as medidas em rem acompanham) */
+html[data-fonte="grande"] { font-size: 125%; }
+
+.botao-acessibilidade {
+  background: transparent;
+  color: var(--neutro-0);
+  border: 2px solid var(--neutro-0);
+  padding: var(--esp-2) var(--esp-3);
+}
+.botao-acessibilidade:hover,
+.botao-acessibilidade[aria-pressed="true"] {
+  background: var(--neutro-0);
+  color: var(--cor-primaria-escura);
+  border-color: var(--neutro-0);
+}
+
+/* Área do gráfico (Chart.js): precisa de altura definida para ser responsivo */
+.area-grafico { position: relative; height: 280px; }
+
+/* Aviso de falha de rede ocupa a largura toda do grid */
+main > .mensagem-form { grid-column: 1 / -1; margin: 0; }
