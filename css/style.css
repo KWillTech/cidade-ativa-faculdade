@@ -349,3 +349,6 @@ html[data-fonte="grande"] { font-size: 125%; }
 
 /* Área do gráfico (Chart.js): precisa de altura definida para ser responsivo */
 .area-grafico { position: relative; height: 280px; }
+
+/* Aviso de falha de rede ocupa a largura toda do grid */
+main > .mensagem-form { grid-column: 1 / -1; margin: 0; }
