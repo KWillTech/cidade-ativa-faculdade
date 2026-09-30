@@ -76,14 +76,22 @@ Depois acesse `http://localhost:8000/html/index.html`. O comando `npm run build`
 
 Não há suíte de testes automatizados no repositório. A qualidade é verificada com o [W3C Markup Validator](https://validator.w3.org/) (as três páginas sem erros nem avisos) e com testes manuais de navegação, formulários, armazenamento, temas e falhas de rede.
 
+## Imagens
+
+- **Formatos:** os logos usam **SVG** (vetorial, escala sem perda e pesa pouco), com **PNG** como reserva (o `npm run imagens` comprime esse PNG). As fotos usam **WebP** com **JPEG** de reserva por meio de `<picture>`.
+- **Resolução:** cada foto é gerada em várias larguras (480, 800, 1200 e 1600 px, sem nunca ampliar). O HTML usa `srcset` e `sizes` para o navegador escolher a menor imagem que atende a largura exibida e a densidade da tela, e `width` e `height` para evitar deslocamento de layout.
+- **Como gerar:** coloque a foto original (JPEG) em `imagens/originais/` e rode `npm run imagens`. O script cria as variantes em `imagens/`, imprime um relatório de tamanhos e mostra o trecho `<picture>` pronto para colar no HTML.
+- **Medição de referência:** em uma foto real de 1024x768 (original em JPEG de 308,6 KB), a versão de 480 px em WebP ficou com 38,8 KB e a de 800 px com 78,9 KB. Em uma conexão 4G lenta simulada, o carregamento no celular caiu de cerca de 1,8 s para 0,5 s. O WebP ficou apenas de 4% maior a 8% menor que um JPEG bem otimizado; a maior parte da economia vem de redimensionar e recomprimir. A foto da missão que está no projeto é provisória, então esses números são de uma foto de referência.
+
 ## Estrutura de pastas
 
 ```
 cidade-ativa-faculdade/
 ├── html/        páginas (index, projetos e cadastro)
 ├── css/         folha de estilos e design system
-├── imagens/     imagens e logos (SVG, PNG, JPG e WebP)
+├── imagens/     imagens e logos (SVG, PNG, JPG e WebP); originais/ guarda as fotos de origem
 ├── build.mjs    script do build de produção
+├── scripts/     otimização de imagens (npm run imagens)
 ├── package.json dependências e scripts do build
 ├── dist/        saída do build (gerada, não versionada)
 └── js/
