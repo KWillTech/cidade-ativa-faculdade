@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidade Ativa - Projetos</title>
+    <link rel="icon" type="image/svg+xml" href="../imagens/logos/cidade-ativa-icone-app.svg">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>
+        <picture>
+            <source srcset="../imagens/logos/cidade-ativa-horizontal-mono-negativa.svg" type="image/svg+xml">
+            <img src="../imagens/logos/cidade-ativa-horizontal-mono-negativa.png" alt="Logo Cidade Ativa" width="302" height="48">
+        </picture>
+    </h1>
+    <nav aria-label="Navegação principal">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icone">
+            <span class="sr-only">Menu</span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html">Início</a></li>
+            <li class="tem-submenu">
+                <a href="projetos.html">Projetos</a>
+                <ul class="submenu">
+                    <li><a href="projetos.html#voluntariado">Voluntariado</a></li>
+                    <li><a href="projetos.html#doacoes">Doações</a></li>
+                </ul>
+            </li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="frentes">
+        <h2>Nossas frentes de atuação</h2>
+        <p>Conheça como você pode participar da Cidade Ativa.</p>
+    </section>
+
+    <section id="voluntariado">
+        <h2>Voluntariado</h2>
+        <article>
+            <h3>Áreas de atuação</h3>
+            <ul id="lista-areas" data-template="modelo-area" data-fonte="areas"></ul>
+        </article>
+        <article>
+            <h3>Como se tornar voluntário</h3>
+            <ol>
+                <li>Preencha o <a href="cadastro.html">cadastro</a></li>
+                <li>Participe da capacitação</li>
+                <li>Escolha uma ação</li>
+            </ol>
+        </article>
+    </section>
+
+    <section id="doacoes">
+        <h2>Campanhas de doação</h2>
+        <div id="lista-campanhas" data-template="modelo-campanha" data-fonte="campanhas">
+            <noscript><p>Ative o JavaScript para ver as campanhas em andamento.</p></noscript>
+        </div>
+        <article id="painel-grafico">
+            <h3>Andamento das campanhas</h3>
+            <div class="area-grafico">
+                <canvas id="grafico-campanhas" role="img" aria-label="Gráfico de barras com o percentual da meta atingido por campanha">
+                    <p>Seu navegador não exibe gráficos. Consulte o resumo logo abaixo.</p>
+                </canvas>
+            </div>
+            <p id="resumo-grafico"></p>
+        </article>
+        <article>
+            <h3>Formas de doar</h3>
+            <ul>
+                <li>Transferência via Pix</li>
+                <li>Doação de materiais</li>
+            </ul>
+        </article>
+    </section>
+
+    <!-- Modelos (templates) clonados pelo JavaScript -->
+    <template id="modelo-area">
+        <li data-campo="nome"></li>
+    </template>
+
+    <template id="modelo-campanha">
+        <article class="cartao-campanha">
+            <h3 data-campo="titulo"></h3>
+            <p data-campo="descricao"></p>
+            <p><strong>Meta:</strong> <span data-campo="meta"></span></p>
+            <p><a data-href="link" href="cadastro.html">Quero participar</a></p>
+        </article>
+    </template>
+</main>
+
+<footer>
+    <p>&copy; 2026 Cidade Ativa. Todos os direitos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pt-br.js" defer></script>
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>

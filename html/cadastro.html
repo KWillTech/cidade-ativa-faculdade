@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidade Ativa - Cadastro</title>
+    <link rel="icon" type="image/svg+xml" href="../imagens/logos/cidade-ativa-icone-app.svg">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>
+        <picture>
+            <source srcset="../imagens/logos/cidade-ativa-horizontal-mono-negativa.svg" type="image/svg+xml">
+            <img src="../imagens/logos/cidade-ativa-horizontal-mono-negativa.png" alt="Logo Cidade Ativa" width="302" height="48">
+        </picture>
+    </h1>
+    <nav aria-label="Navegação principal">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icone">
+            <span class="sr-only">Menu</span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html">Início</a></li>
+            <li class="tem-submenu">
+                <a href="projetos.html">Projetos</a>
+                <ul class="submenu">
+                    <li><a href="projetos.html#voluntariado">Voluntariado</a></li>
+                    <li><a href="projetos.html#doacoes">Doações</a></li>
+                </ul>
+            </li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section>
+        <h2>Cadastro</h2>
+        <form action="#" method="post">
+
+            <fieldset>
+                <legend>Dados pessoais</legend>
+                <label for="nome">Nome completo</label>
+                <input type="text" id="nome" name="nome" required autocomplete="name">
+
+                <label for="email">E-mail</label>
+                <input type="email" id="email" name="email" required autocomplete="email">
+
+                <label for="nascimento">Data de nascimento</label>
+                <input type="date" id="nascimento" name="nascimento" required>
+
+                <label for="cpf">CPF</label>
+                <input type="text" id="cpf" name="cpf" required
+                       pattern="[0-9]{3}\.[0-9]{3}\.[0-9]{3}-[0-9]{2}"
+                       placeholder="000.000.000-00" maxlength="14"
+                       title="Digite o CPF no formato 000.000.000-00">
+
+                <label for="telefone">Telefone</label>
+                <input type="tel" id="telefone" name="telefone" required
+                       pattern="\([0-9]{2}\) [0-9]{4,5}-[0-9]{4}"
+                       placeholder="(11) 99999-9999" maxlength="15"
+                       title="Digite o telefone no formato (11) 99999-9999">
+            </fieldset>
+
+            <fieldset>
+                <legend>Endereço</legend>
+                <label for="cep">CEP</label>
+                <input type="text" id="cep" name="cep" required
+                       pattern="[0-9]{5}-[0-9]{3}"
+                       placeholder="00000-000" maxlength="9"
+                       title="Digite o CEP no formato 00000-000">
+
+                <label for="endereco">Endereço</label>
+                <input type="text" id="endereco" name="endereco" required>
+
+                <label for="cidade">Cidade</label>
+                <input type="text" id="cidade" name="cidade" required>
+
+                <label for="estado">Estado</label>
+                <select id="estado" name="estado" required>
+                    <option value="">Selecione</option>
+            <option value="AC">AC</option>
+            <option value="AL">AL</option>
+            <option value="AP">AP</option>
+            <option value="AM">AM</option>
+            <option value="BA">BA</option>
+            <option value="CE">CE</option>
+            <option value="DF">DF</option>
+            <option value="ES">ES</option>
+            <option value="GO">GO</option>
+            <option value="MA">MA</option>
+            <option value="MT">MT</option>
+            <option value="MS">MS</option>
+            <option value="MG">MG</option>
+            <option value="PA">PA</option>
+            <option value="PB">PB</option>
+            <option value="PR">PR</option>
+            <option value="PE">PE</option>
+            <option value="PI">PI</option>
+            <option value="RJ">RJ</option>
+            <option value="RN">RN</option>
+            <option value="RS">RS</option>
+            <option value="RO">RO</option>
+            <option value="RR">RR</option>
+            <option value="SC">SC</option>
+            <option value="SP">SP</option>
+            <option value="SE">SE</option>
+            <option value="TO">TO</option>
+                </select>
+            </fieldset>
+
+            <fieldset>
+                <legend>Interesse de participação</legend>
+                <div class="opcao">
+                    <input type="radio" id="voluntario" name="interesse" value="voluntariado" required>
+                    <label for="voluntario">Quero ser voluntário</label>
+                </div>
+                <div class="opcao">
+                    <input type="radio" id="doador" name="interesse" value="doacao">
+                    <label for="doador">Quero fazer uma doação</label>
+                </div>
+            </fieldset>
+
+            <div class="opcao">
+                <input type="checkbox" id="termos" name="termos" required>
+                <label for="termos">Li e aceito os termos de uso</label>
+            </div>
+
+            <p><button type="submit">Enviar cadastro</button></p>
+        </form>
+
+        <div id="historico" hidden>
+            <h3>Cadastros enviados neste navegador</h3>
+            <ul id="lista-historico" data-template="modelo-historico" data-fonte="historico"></ul>
+            <p><button type="button" id="limpar-historico">Limpar histórico</button></p>
+        </div>
+    </section>
+
+    <!-- Modelo (template) do histórico -->
+    <template id="modelo-historico">
+        <li><strong data-campo="nome"></strong> - <span data-campo="interesse"></span> (<span data-campo="data"></span>)</li>
+    </template>
+</main>
+
+<footer>
+    <p>&copy; 2026 Cidade Ativa. Todos os direitos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pt-br.js" defer></script>
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>
