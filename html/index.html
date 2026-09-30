@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cidade Ativa - Início</title>
+    <link rel="icon" type="image/svg+xml" href="../imagens/logos/cidade-ativa-icone-app.svg">
+    <link rel="stylesheet" href="../css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>
+        <picture>
+            <source srcset="../imagens/logos/cidade-ativa-horizontal-mono-negativa.svg" type="image/svg+xml">
+            <img src="../imagens/logos/cidade-ativa-horizontal-mono-negativa.png" alt="Logo Cidade Ativa" width="302" height="48">
+        </picture>
+    </h1>
+    <nav aria-label="Navegação principal">
+        <input type="checkbox" id="menu-toggle" class="menu-toggle">
+        <label for="menu-toggle" class="menu-icone">
+            <span class="sr-only">Menu</span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+            <span class="barra"></span>
+        </label>
+        <ul class="menu">
+            <li><a href="index.html">Início</a></li>
+            <li class="tem-submenu">
+                <a href="projetos.html">Projetos</a>
+                <ul class="submenu">
+                    <li><a href="projetos.html#voluntariado">Voluntariado</a></li>
+                    <li><a href="projetos.html#doacoes">Doações</a></li>
+                </ul>
+            </li>
+            <li><a href="cadastro.html">Cadastro</a></li>
+            <li><a href="index.html#contato">Contato</a></li>
+        </ul>
+    </nav>
+</header>
+
+<main>
+    <section id="sobre">
+        <h2>Sobre a Cidade Ativa</h2>
+        <picture>
+            <source srcset="../imagens/missao.webp" type="image/webp">
+            <img src="../imagens/missao.jpg" alt="Equipe da Cidade Ativa em ação comunitária">
+        </picture>
+        <p>Somos uma organização dedicada ao registro e à resolução de problemas urbanos, promovendo cidades mais participativas e inclusivas.</p>
+        <h3>Nossa missão</h3>
+        <p>Capacitar cidadãos na identificação e na resolução colaborativa de desafios urbanos.</p>
+    </section>
+
+    <section id="contato">
+        <h2>Entre em contato</h2>
+        <h3>Dados de contato</h3>
+        <ul>
+            <li><strong>E-mail:</strong> contato@cidadeativa.org.br</li>
+            <li><strong>Telefone:</strong> (11) 9999-9999</li>
+            <li><strong>Endereço:</strong> Rua Principal, 123 - São Paulo, SP</li>
+        </ul>
+        <h3>Formulário de contato</h3>
+        <form action="#" method="post">
+            <label for="c-nome">Nome</label>
+            <input type="text" id="c-nome" name="nome" required>
+            <label for="c-email">E-mail</label>
+            <input type="email" id="c-email" name="email" required>
+            <label for="c-msg">Mensagem</label>
+            <textarea id="c-msg" name="mensagem" rows="4" required></textarea>
+            <p><button type="submit">Enviar mensagem</button></p>
+        </form>
+    </section>
+</main>
+
+<footer>
+    <p>&copy; 2026 Cidade Ativa. Todos os direitos reservados.</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/dayjs.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/plugin/relativeTime.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/dayjs@1.11.10/locale/pt-br.js" defer></script>
+<script type="module" src="../js/main.js"></script>
+</body>
+</html>
