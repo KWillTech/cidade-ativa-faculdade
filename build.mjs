@@ -79,7 +79,11 @@ for (const pagina of await arquivosDe("html", ".html")) {
 }
 
 /* 4) Imagens: cópia direta */
-await cp("imagens", `${SAIDA}/imagens`, { recursive: true });
+/* imagens/originais guarda as fotos de origem (pesadas): não vai para a produção */
+await cp("imagens", `${SAIDA}/imagens`, {
+  recursive: true,
+  filter: (origem) => !origem.replaceAll("\\", "/").includes("imagens/originais"),
+});
 
 /* 5) Relatório de tamanhos (antes x depois) */
 const relatorio = [

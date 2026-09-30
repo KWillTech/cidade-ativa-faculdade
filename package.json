@@ -5,10 +5,12 @@
   "type": "module",
   "description": "Site institucional da ONG Cidade Ativa (front-end com HTML, CSS e JavaScript modular)",
   "scripts": {
-    "build": "node build.mjs"
+    "build": "node build.mjs",
+    "imagens": "node scripts/otimizar-imagens.mjs"
   },
   "devDependencies": {
     "esbuild": "^0.28.2",
-    "html-minifier-terser": "^7.2.0"
+    "html-minifier-terser": "^7.2.0",
+    "sharp": "^0.35.5"
   }
 }
