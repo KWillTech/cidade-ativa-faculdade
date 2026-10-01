@@ -83,6 +83,14 @@ Não há suíte de testes automatizados no repositório. A qualidade é verifica
 - **Como gerar:** coloque a foto original (JPEG) em `imagens/originais/` e rode `npm run imagens`. O script cria as variantes em `imagens/`, imprime um relatório de tamanhos e mostra o trecho `<picture>` pronto para colar no HTML.
 - **Medição de referência:** em uma foto real de 1024x768 (original em JPEG de 308,6 KB), a versão de 480 px em WebP ficou com 38,8 KB e a de 800 px com 78,9 KB. Em uma conexão 4G lenta simulada, o carregamento no celular caiu de cerca de 1,8 s para 0,5 s. O WebP ficou apenas de 4% maior a 8% menor que um JPEG bem otimizado; a maior parte da economia vem de redimensionar e recomprimir. A foto da missão que está no projeto é provisória, então esses números são de uma foto de referência.
 
+## Deploy e CI/CD
+
+- **Plataforma:** GitHub Pages. O repositório já está no GitHub, não é preciso criar outra conta, o site é estático (HTML, CSS e JavaScript) e a entrega é por HTTPS e CDN, sem custo.
+- **Endereço esperado:** `https://kwilltech.github.io/cidade-ativa-faculdade/` (a raiz redireciona para `html/index.html`).
+- **Integração contínua:** o workflow `.github/workflows/deploy.yml` roda em todo pull request para `main` ou `develop`: instala as dependências com `npm ci`, gera o build e confere que as páginas foram criadas.
+- **Entrega contínua:** a cada push na `main` (por exemplo, o merge de uma `release/*` do GitFlow), o workflow publica a pasta `dist/` no GitHub Pages.
+- **Como ativar uma vez:** em *Settings > Pages > Build and deployment*, escolha **Source: GitHub Actions**. Depois, acompanhe a execução na aba *Actions*.
+
 ## Estrutura de pastas
 
 ```
@@ -90,6 +98,7 @@ cidade-ativa-faculdade/
 ├── html/        páginas (index, projetos e cadastro)
 ├── css/         folha de estilos e design system
 ├── imagens/     imagens e logos (SVG, PNG, JPG e WebP); originais/ guarda as fotos de origem
+├── .github/     workflow de CI/CD (deploy no GitHub Pages)
 ├── build.mjs    script do build de produção
 ├── scripts/     otimização de imagens (npm run imagens)
 ├── package.json dependências e scripts do build
