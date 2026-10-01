@@ -43,7 +43,7 @@ function restaurarRascunho() {
 
   CAMPOS_RASCUNHO.forEach(function (nome) {
     const valor = rascunho[nome];
-    if (!valor) return;
+    if (typeof valor !== "string" || !valor) return; /* ignora tipos inesperados */
     const campos = form.querySelectorAll('[name="' + nome + '"]');
     if (campos.length && campos[0].type === "radio") {
       const alvo = Array.from(campos).find((r) => r.value === valor);
@@ -57,7 +57,8 @@ function restaurarRascunho() {
 /* --- Histórico (array) --- */
 function registrarCadastro(form) {
   const interesse = form.querySelector('[name="interesse"]:checked');
-  const historico = lerStorage(CHAVE_HISTORICO, []);
+  const atual = lerStorage(CHAVE_HISTORICO, []);
+  const historico = Array.isArray(atual) ? atual : []; /* dado corrompido vira lista vazia */
   historico.unshift({
     nome: form.querySelector('[name="nome"]').value.trim(),
     interesse: interesse ? interesse.value : "",
@@ -67,17 +68,20 @@ function registrarCadastro(form) {
   removerStorage(CHAVE_RASCUNHO); /* cadastro concluído: descarta o rascunho */
 }
 
-/* Converte o array salvo em itens prontos para o template */
+/* Converte o array salvo em itens prontos para o template (ignora itens inválidos) */
 function historicoParaExibir() {
   const salvo = lerStorage(CHAVE_HISTORICO, []);
   if (!Array.isArray(salvo)) return [];
-  return salvo.map(function (item) {
-    return {
-      nome: item.nome,
-      interesse: ROTULO_INTERESSE[item.interesse] || "Sem interesse informado",
-      data: formatarData(item.data),
-    };
-  });
+  return salvo
+    .filter((item) => item && typeof item === "object" && typeof item.nome === "string")
+    .map(function (item) {
+      const dataValida = typeof item.data === "string" && !isNaN(Date.parse(item.data));
+      return {
+        nome: item.nome,
+        interesse: ROTULO_INTERESSE[item.interesse] || "Sem interesse informado",
+        data: dataValida ? formatarData(item.data) : "data não registrada",
+      };
+    });
 }
 
 function atualizarBlocoHistorico() {

@@ -3,17 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        (function () {
+            try {
+                var t = JSON.parse(localStorage.getItem("cidadeAtiva:tema"));
+                if (t === "claro" || t === "escuro" || t === "alto-contraste") document.documentElement.dataset.tema = t;
+            } catch (e) {}
+        })();
+    </script>
     <title>Cidade Ativa - Projetos</title>
+    <link rel="icon" type="image/svg+xml" href="../imagens/logos/cidade-ativa-icone-app.svg">
     <link rel="stylesheet" href="../css/style.css">
 </head>
 <body>
 
 <header>
-    <picture>
-        <source srcset="../imagens/logo.webp" type="image/webp">
-        <img src="../imagens/logo.png" alt="Logo Cidade Ativa">
-    </picture>
-    <h1>Cidade Ativa</h1>
+    <h1>
+        <picture>
+            <source srcset="../imagens/logos/cidade-ativa-horizontal-mono-negativa.svg" type="image/svg+xml">
+            <img src="../imagens/logos/cidade-ativa-horizontal-mono-negativa.png" alt="Logo Cidade Ativa" width="302" height="48">
+        </picture>
+    </h1>
     <nav aria-label="Navegação principal">
         <input type="checkbox" id="menu-toggle" class="menu-toggle">
         <label for="menu-toggle" class="menu-icone">
