@@ -4,7 +4,7 @@
    página tem o <canvas> do gráfico.
    ========================================================== */
 import { DADOS } from "../dados.js";
-import { ouvir, PAGINA_RENDERIZADA } from "./eventos.js";
+import { ouvir, PAGINA_RENDERIZADA, TEMA_ALTERADO } from "./eventos.js";
 
 const URL_CHART = "https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js";
 let instancia = null;
@@ -77,8 +77,8 @@ async function renderizar() {
       datasets: [{
         label: "% da meta atingido",
         data: percentuais,
-        backgroundColor: cor("--cor-primaria"),
-        borderColor: cor("--cor-primaria-escura"),
+        backgroundColor: cor("--grafico-barra"),
+        borderColor: cor("--texto"),
         borderWidth: 1,
       }],
     },
@@ -87,11 +87,13 @@ async function renderizar() {
       maintainAspectRatio: false,
       animation: reduzirMovimento ? false : { duration: 800 },
       scales: {
+        x: { ticks: { color: cor("--texto") }, grid: { color: cor("--borda") } },
         y: {
           beginAtZero: true,
           max: 100,
-          ticks: { callback: (valor) => valor + "%" },
-          title: { display: true, text: "% da meta" },
+          ticks: { color: cor("--texto"), callback: (valor) => valor + "%" },
+          grid: { color: cor("--borda") },
+          title: { display: true, text: "% da meta", color: cor("--texto") },
         },
       },
       plugins: {
@@ -104,4 +106,5 @@ async function renderizar() {
 
 export function iniciarGrafico() {
   ouvir(PAGINA_RENDERIZADA, renderizar);
+  ouvir(TEMA_ALTERADO, renderizar); /* redesenha com as cores do novo tema */
 }
