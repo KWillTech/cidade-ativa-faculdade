@@ -65,8 +65,8 @@ header {
   position: relative;
 }
 
-header img { height: 48px; width: auto; }
 header h1 { margin: 0; font-size: var(--fs-500); flex: 1; }
+header h1 img { display: block; height: 36px; width: auto; max-width: 100%; }
 
 /* ==========================================================
    MENU RESPONSIVO (hambúrguer no celular, dropdown no desktop)
@@ -248,6 +248,7 @@ footer { text-align: center; padding: var(--esp-4); font-size: var(--fs-100); co
 @media (min-width: 768px) {
   :root { --gap-grid: var(--esp-4); --largura-max: 100%; }
   header { padding: var(--esp-3) var(--esp-5); }
+  header h1 img { height: 44px; }
 
   /* Esconde o hambúrguer e exibe o menu horizontal */
   .menu-toggle, .menu-icone { display: none; }
