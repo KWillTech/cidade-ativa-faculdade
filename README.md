@@ -19,6 +19,7 @@ Projeto de front-end desenvolvido como atividade prática de faculdade, com foco
 | Estrutura | HTML5 semântico |
 | Estilo | CSS3: variáveis (design system), Grid de 12 colunas, Flexbox e media queries |
 | Comportamento | JavaScript puro (ES Modules), sem framework |
+| Build de produção | esbuild (bundle e minificação de JS e CSS) e html-minifier-terser (HTML) |
 | Bibliotecas (via CDN) | Chart.js 4.4.1 (gráfico) e Day.js 1.11.10 (datas) |
 | Versionamento | Git, GitHub, GitFlow, Conventional Commits e Versionamento Semântico |
 
@@ -29,7 +30,7 @@ Projeto de front-end desenvolvido como atividade prática de faculdade, com foco
 - [VS Code](https://code.visualstudio.com/) com a extensão **Live Server** (ou Python 3, como alternativa).
 - Conexão com a internet, pois Chart.js e Day.js são carregados por CDN.
 
-Não é necessário instalar Node.js nem pacotes: o projeto não possui dependências locais.
+Para **executar o site** não é necessário instalar Node.js nem pacotes. O [Node.js](https://nodejs.org/) 18 ou superior só é preciso para gerar o build de produção.
 
 ## Instalação e execução local
 
@@ -52,8 +53,43 @@ Depois acesse `http://localhost:8000/html/index.html`.
 
 ## Build e testes
 
-- **Build:** não há etapa de build. Os arquivos são servidos exatamente como estão no repositório.
-- **Testes:** não há suíte de testes automatizados. A qualidade é verificada com o [W3C Markup Validator](https://validator.w3.org/) (as três páginas sem erros nem avisos) e com testes manuais de navegação, formulários, armazenamento e falhas de rede.
+### Build de produção
+
+O build junta os módulos JavaScript em um único arquivo e minifica JS, CSS e HTML, usando **esbuild** e **html-minifier-terser**. A saída vai para `dist/`, com a mesma estrutura de pastas do projeto (`dist/html`, `dist/css`, `dist/js` e `dist/imagens`), então os caminhos relativos continuam válidos.
+
+```bash
+npm install
+npm run build
+```
+
+Para visualizar a versão de produção, sirva a pasta `dist/` por HTTP, por exemplo:
+
+```bash
+python -m http.server 8000 --directory dist
+```
+
+Depois acesse `http://localhost:8000/html/index.html`. O comando `npm run build` imprime um relatório com os tamanhos antes e depois. Na medição feita no projeto, os 13 arquivos JavaScript viraram 1, e o total passou de 66,5 KB para 39,8 KB (redução de cerca de 40%; 58% no JavaScript com gzip). A versão minificada foi comparada com a de desenvolvimento em um navegador real: as três páginas, nos três temas, ficaram idênticas pixel a pixel.
+
+> A pasta `dist/` é gerada e não é versionada (está no `.gitignore`).
+
+### Testes
+
+Não há suíte de testes automatizados no repositório. A qualidade é verificada com o [W3C Markup Validator](https://validator.w3.org/) (as três páginas sem erros nem avisos) e com testes manuais de navegação, formulários, armazenamento, temas e falhas de rede.
+
+## Imagens
+
+- **Formatos:** os logos usam **SVG** (vetorial, escala sem perda e pesa pouco), com **PNG** como reserva (o `npm run imagens` comprime esse PNG). As fotos usam **WebP** com **JPEG** de reserva por meio de `<picture>`.
+- **Resolução:** cada foto é gerada em várias larguras (480, 800, 1200 e 1600 px, sem nunca ampliar). O HTML usa `srcset` e `sizes` para o navegador escolher a menor imagem que atende a largura exibida e a densidade da tela, e `width` e `height` para evitar deslocamento de layout.
+- **Como gerar:** coloque a foto original (JPEG) em `imagens/originais/` e rode `npm run imagens`. O script cria as variantes em `imagens/`, imprime um relatório de tamanhos e mostra o trecho `<picture>` pronto para colar no HTML.
+- **Medição de referência:** em uma foto real de 1024x768 (original em JPEG de 308,6 KB), a versão de 480 px em WebP ficou com 38,8 KB e a de 800 px com 78,9 KB. Em uma conexão 4G lenta simulada, o carregamento no celular caiu de cerca de 1,8 s para 0,5 s. O WebP ficou apenas de 4% maior a 8% menor que um JPEG bem otimizado; a maior parte da economia vem de redimensionar e recomprimir. A foto da missão que está no projeto é provisória, então esses números são de uma foto de referência.
+
+## Deploy e CI/CD
+
+- **Plataforma:** GitHub Pages. O repositório já está no GitHub, não é preciso criar outra conta, o site é estático (HTML, CSS e JavaScript) e a entrega é por HTTPS e CDN, sem custo.
+- **Endereço esperado:** `https://kwilltech.github.io/cidade-ativa-faculdade/` (a raiz redireciona para `html/index.html`).
+- **Integração contínua:** o workflow `.github/workflows/deploy.yml` roda em todo pull request para `main` ou `develop`: instala as dependências com `npm ci`, gera o build e confere que as páginas foram criadas.
+- **Entrega contínua:** a cada push na `main` (por exemplo, o merge de uma `release/*` do GitFlow), o workflow publica a pasta `dist/` no GitHub Pages.
+- **Como ativar uma vez:** em *Settings > Pages > Build and deployment*, escolha **Source: GitHub Actions**. Depois, acompanhe a execução na aba *Actions*.
 
 ## Estrutura de pastas
 
@@ -61,7 +97,12 @@ Depois acesse `http://localhost:8000/html/index.html`.
 cidade-ativa-faculdade/
 ├── html/        páginas (index, projetos e cadastro)
 ├── css/         folha de estilos e design system
-├── imagens/     imagens e logos (SVG, PNG, JPG e WebP)
+├── imagens/     imagens e logos (SVG, PNG, JPG e WebP); originais/ guarda as fotos de origem
+├── .github/     workflow de CI/CD (deploy no GitHub Pages)
+├── build.mjs    script do build de produção
+├── scripts/     otimização de imagens (npm run imagens)
+├── package.json dependências e scripts do build
+├── dist/        saída do build (gerada, não versionada)
 └── js/
     ├── main.js      orquestrador
     ├── dados.js     fonte de dados
