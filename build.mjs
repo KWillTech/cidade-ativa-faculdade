@@ -93,7 +93,6 @@ await writeFile(
     '<meta http-equiv="refresh" content="0; url=html/index.html"><link rel="canonical" href="html/index.html"></head>' +
     '<body><p><a href="html/index.html">Ir para a página inicial da Cidade Ativa</a></p></body></html>'
 );
-
 /* 5) Relatório de tamanhos (antes x depois) */
 const relatorio = [
   ["HTML", await arquivosDe("html", ".html"), await arquivosDe(`${SAIDA}/html`, ".html")],
